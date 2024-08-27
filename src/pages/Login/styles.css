@@ -43,8 +43,8 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    padding: 16px;
-    width: 520px;
+    padding: 14px;
+    width: 450px;
     height: 20px;
     border: 1px solid #0a9228;
     border-radius: 12px;
@@ -61,7 +61,7 @@
   }
 
   .container form .button {
-    width: 520px;
+    width: 450px;
     height: 48px;
     background: #0a9228;
     border-radius: 12px;
