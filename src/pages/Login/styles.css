@@ -1,0 +1,88 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .container .header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+
+  .container .header span {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    padding-top: 10px;
+  }
+
+  .container form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .container form  .inputContainer {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .container form  .inputContainer label {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    margin-bottom: 8px;
+  }
+
+  .container form  .inputContainer input {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 16px;
+    width: 520px;
+    height: 20px;
+    border: 1px solid #0a9228;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+
+  .container form a {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    color: #0a9228;
+  }
+
+  .container form .button {
+    width: 520px;
+    height: 48px;
+    background: #0a9228;
+    border-radius: 12px;
+    color: #fff;
+    border: none;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 60px;
+  }
+
+  .button{
+    margin-top: 20px;
+  }
+
+  .container form .button:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
