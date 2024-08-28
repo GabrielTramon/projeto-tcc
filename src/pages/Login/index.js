@@ -24,7 +24,7 @@ export function Login() {
   }
 
   if (user) {
-    navigate("/homeGerente"); // Redireciona para a página "/dashboard"
+    navigate("/homeGerente");
   }
 
   return (

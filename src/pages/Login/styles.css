@@ -1,88 +1,105 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #ece9e6, #ffffff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
 .container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
-  .container .header {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-bottom: 10px;
-  }
+  background-color: #ffffff;
+  padding: 50px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center; /* Centraliza o conteúdo dentro do container */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-  .container .header span {
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 24px;
-    padding-top: 10px;
-  }
+.header {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .container form {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
+.logo {
+  width: 100px; /* Ajuste o tamanho conforme necessário */
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px; /* Espaçamento abaixo do logo */
+}
 
-  .container form  .inputContainer {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-  }
+.header span {
+  font-size: 20px;
+  color: #333;
+  font-weight: 500;
+}
 
-  .container form  .inputContainer label {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-    margin-bottom: 8px;
-  }
+.inputContainer {
+  margin-bottom: 25px;
+  width: 100%; /* Garante que os inputs ocupem toda a largura disponível */
+  text-align: left; /* Centraliza as labels alinhadas à esquerda */
+}
 
-  .container form  .inputContainer input {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 14px;
-    width: 450px;
-    height: 20px;
-    border: 1px solid #0a9228;
-    border-radius: 12px;
-    margin-bottom: 12px;
-  }
+.inputContainer label {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 6px;
+}
 
-  .container form a {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    color: #0a9228;
-  }
+.inputContainer input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
 
-  .container form .button {
-    width: 450px;
-    height: 48px;
-    background: #0a9228;
-    border-radius: 12px;
-    color: #fff;
-    border: none;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 60px;
-  }
+.inputContainer input:focus {
+  border-color: #5a67d8;
+  box-shadow: 0 0 8px rgba(90, 103, 216, 0.3);
+  outline: none;
+}
 
-  .button{
-    margin-top: 20px;
-  }
+.button {
+  width: 100%;
+  padding: 14px;
+  background-color: #5a67d8;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 500;
+}
 
-  .container form .button:hover {
-    cursor: pointer;
-    opacity: 0.8;
-  }
+.button:hover {
+  background-color: #434190;
+}
+
+button:focus {
+  outline: none;
+}
+
+button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+p {
+  text-align: center;
+  color: #5a67d8;
+  font-size: 16px;
+}
