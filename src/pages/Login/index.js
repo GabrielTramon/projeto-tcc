@@ -3,7 +3,7 @@ import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { auth } from "../../services/firebaseConfig";
-import "./styles.css";
+import style from "../Login/styles.module.css";
 
 export function Login() {
   const [email, setEmail] = useState("");
@@ -28,14 +28,14 @@ export function Login() {
   }
 
   return (
-    <div className="container">
-      <header className="header">
-        <img src={logo} alt="Workflow" className="logo" width={180} />
+    <div className={style.container}>
+      <header className={style.header}>
+        <img src={logo} alt="Workflow" className={style.logo} width={180} />
         <span>Seja Bem-Vindo ao sistema T&T</span>
       </header>
 
       <form>
-        <div className="inputContainer">
+        <div className={style.inputContainer}>
           <label htmlFor="email">E-mail</label>
           <input
             type="text"
@@ -46,7 +46,7 @@ export function Login() {
           />
         </div>
 
-        <div className="inputContainer">
+        <div className={style.inputContainer}>
           <label htmlFor="password">Senha</label>
           <input
             type="password"
@@ -56,7 +56,7 @@ export function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button className="button" onClick={handleSignIn}>
+        <button className={style.button} onClick={handleSignIn}>
           Entrar
         </button>
       </form>
