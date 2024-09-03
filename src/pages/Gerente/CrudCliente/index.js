@@ -18,27 +18,27 @@ const firebaseApp = initializeApp({
 });
 
 export const CrudCliente = () => {
-  const [users, setUsers] = useState([]);
+  const [Clientes, setClientes] = useState([]);
 
   const db = getFirestore(firebaseApp);
-  const usersCollectionRef = collection(db, "users");
+  const ClientesCollectionRef = collection(db, "Clientes");
 
   useEffect(() => {
-    const getUsers = async () => {
-      const data = await getDocs(usersCollectionRef);
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    const getClientes = async () => {
+      const data = await getDocs(ClientesCollectionRef);
+      setClientes(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
-    getUsers();
+    getClientes();
   }, []);
 
   async function deleteUser(id) {
     try {
-      const userDoc = doc(db, "users", id);
+      const userDoc = doc(db, "Clientes", id);
       await deleteDoc(userDoc);
       alert("Usuário deletado com sucesso!");
 
-      // Recarregar a página
-      window.location.reload();
+      // Atualizar o estado dos clientes após a exclusão
+      setClientes(Clientes.filter((user) => user.id !== id));
     } catch (e) {
       console.error("Erro ao deletar usuário: ", e);
       alert("Erro ao deletar usuário: " + e.message);
@@ -48,11 +48,15 @@ export const CrudCliente = () => {
   return (
     <div>
       <ul>
-        {users.map((user) => {
+        {Clientes.map((user) => {
           return (
             <div key={user.id}>
-              <li>{user.name}</li>
+              <li>{user.nome}</li>
               <li>{user.email}</li>
+              <li>{user.endereço}</li>
+              <li>{user.cpf}</li>
+              <li>{user.telefone}</li>
+              <li>{user.dataNascimento}</li>
               <button onClick={() => deleteUser(user.id)}>Deletar</button>
             </div>
           );
