@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import style from "../Home/styles.module.css";
 
 export function HomeGerente() {
   const navigate = useNavigate();
@@ -42,36 +43,37 @@ export function HomeGerente() {
   function PageFaturamento() {
     navigate("/faturamento");
   }
+  
   return (
-    <div className="page">
-      <button className="button" onClick={PageVenda}>
+    <div className={style.page}>
+      <button className={style.button} onClick={PageVenda}>
         Venda ao consumidor
       </button>
-      <button className="button" onClick={PageAdcCliente}>
+      <button className={style.button} onClick={PageAdcCliente}>
         Adicionar cliente
       </button>
-      <button className="button" onClick={PageCrudCLiente}>
+      <button className={style.button} onClick={PageCrudCLiente}>
         Visualizar Clientes
       </button>
-      <button className="button" onClick={AdcProduto}>
+      <button className={style.button} onClick={AdcProduto}>
         Adicionar Produto
       </button>
-      <button className="button" onClick={CrudProduto}>
+      <button className={style.button} onClick={CrudProduto}>
         Visualizar Produtos
       </button>
-      <button className="button" onClick={AdcVendedor}>
+      <button className={style.button} onClick={AdcVendedor}>
         Adicionar Vendedor
       </button>
-      <button className="button" onClick={CrudVendedor}>
+      <button className={style.button} onClick={CrudVendedor}>
         Visualizar Vendedores
       </button>
-      <button className="button" onClick={AdcAgenda}>
+      <button className={style.button} onClick={AdcAgenda}>
         Adicionar Pet Banho e tosa
       </button>
-      <button className="button" onClick={CrudAgenda}>
+      <button className={style.button} onClick={CrudAgenda}>
         Visualizar agenda
       </button>
-      <button className="button" onClick={PageFaturamento}>
+      <button className={style.button} onClick={PageFaturamento}>
         Faturamento
       </button>
     </div>

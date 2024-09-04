@@ -7,6 +7,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import style from "../CrudCliente/styles.module.css";
 
 const firebaseApp = initializeApp({
   apiKey: "AIzaSyCEli15SSz40ZzsWWY3orYRcxx8I9qxIXw",
@@ -19,6 +20,7 @@ const firebaseApp = initializeApp({
 
 export const CrudCliente = () => {
   const [Clientes, setClientes] = useState([]);
+  const [activeClientId, setActiveClientId] = useState(null);
 
   const db = getFirestore(firebaseApp);
   const ClientesCollectionRef = collection(db, "Clientes");
@@ -31,13 +33,15 @@ export const CrudCliente = () => {
     getClientes();
   }, []);
 
+  const toggleClientDetails = (id) => {
+    setActiveClientId(activeClientId === id ? null : id);
+  };
+
   async function deleteUser(id) {
     try {
       const userDoc = doc(db, "Clientes", id);
       await deleteDoc(userDoc);
       alert("Usuário deletado com sucesso!");
-
-      // Atualizar o estado dos clientes após a exclusão
       setClientes(Clientes.filter((user) => user.id !== id));
     } catch (e) {
       console.error("Erro ao deletar usuário: ", e);
@@ -46,21 +50,35 @@ export const CrudCliente = () => {
   }
 
   return (
-    <div>
-      <ul>
-        {Clientes.map((user) => {
-          return (
-            <div key={user.id}>
-              <li>{user.nome}</li>
-              <li>{user.email}</li>
-              <li>{user.endereço}</li>
-              <li>{user.cpf}</li>
-              <li>{user.telefone}</li>
-              <li>{user.dataNascimento}</li>
-              <button onClick={() => deleteUser(user.id)}>Deletar</button>
+    <div className={style.container}>
+      <ul className={style.clientList}>
+        {Clientes.map((user) => (
+          <li
+            key={user.id}
+            className={`${style.clientItem} ${
+              activeClientId === user.id ? style.active : ""
+            }`}
+            onClick={() => toggleClientDetails(user.id)}
+          >
+            {user.nome}
+            <div className={style.clientDetails}>
+              <p>Email: {user.email}</p>
+              <p>Endereço: {user.endereço}</p>
+              <p>CPF: {user.cpf}</p>
+              <p>Telefone: {user.telefone}</p>
+              <p>Data de Nascimento: {user.dataNascimento}</p>
+              <button
+                className={style.deleteButton}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  deleteUser(user.id);
+                }}
+              >
+                Deletar
+              </button>
             </div>
-          );
-        })}
+          </li>
+        ))}
       </ul>
     </div>
   );
