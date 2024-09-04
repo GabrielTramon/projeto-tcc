@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { useState } from "react";
+import style from "../AdcCliente/styles.module.css";
 
 const firebaseApp = initializeApp({
   apiKey: "AIzaSyCEli15SSz40ZzsWWY3orYRcxx8I9qxIXw",
@@ -45,44 +46,53 @@ export const AdcCliente = () => {
   }
 
   return (
-    <div>
+    <div className={style.container}>
+      <h1>Adicionar Clientes</h1>
       <input
+        className={style.input}
         type="text"
         placeholder="Nome"
         value={nome}
         onChange={(e) => setNome(e.target.value)}
       />
       <input
+        className={style.input}
         type="email"
         placeholder="E-mail"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <input
+        className={style.input}
         type="text"
         placeholder="Endereço"
         value={endereço}
         onChange={(e) => setEndereço(e.target.value)}
       />
       <input
+        className={style.input}
         type="text"
         placeholder="CPF"
         value={cpf}
         onChange={(e) => setCpf(e.target.value)}
       />
       <input
+        className={style.input}
         type="text"
         placeholder="Telefone"
         value={telefone}
         onChange={(e) => setTelefone(e.target.value)}
       />
       <input
+        className={style.input}
         type="date"
         placeholder="Data de nascimento"
         value={dataNascimento}
         onChange={(e) => setDataNascimento(e.target.value)}
       />
-      <button onClick={criarDado}>Criar dado</button>
+      <button className={style.button} onClick={criarDado}>
+        Criar dado
+      </button>
     </div>
   );
 };

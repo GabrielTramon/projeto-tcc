@@ -20,7 +20,9 @@ const firebaseApp = initializeApp({
 
 export const CrudCliente = () => {
   const [Clientes, setClientes] = useState([]);
+  const [filteredClientes, setFilteredClientes] = useState([]);
   const [activeClientId, setActiveClientId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const db = getFirestore(firebaseApp);
   const ClientesCollectionRef = collection(db, "Clientes");
@@ -28,10 +30,23 @@ export const CrudCliente = () => {
   useEffect(() => {
     const getClientes = async () => {
       const data = await getDocs(ClientesCollectionRef);
-      setClientes(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      const sortedClients = data.docs
+        .map((doc) => ({ ...doc.data(), id: doc.id }))
+        .sort((a, b) => a.nome.localeCompare(b.nome)); // Ordena os nomes alfabeticamente
+      setClientes(sortedClients);
+      setFilteredClientes(sortedClients); // Inicialmente, a lista filtrada é a lista completa
     };
     getClientes();
   }, []);
+
+  const handleSearch = (e) => {
+    const term = e.target.value.toLowerCase();
+    setSearchTerm(term);
+    const filtered = Clientes.filter((client) =>
+      client.nome.toLowerCase().includes(term)
+    );
+    setFilteredClientes(filtered);
+  };
 
   const toggleClientDetails = (id) => {
     setActiveClientId(activeClientId === id ? null : id);
@@ -43,6 +58,7 @@ export const CrudCliente = () => {
       await deleteDoc(userDoc);
       alert("Usuário deletado com sucesso!");
       setClientes(Clientes.filter((user) => user.id !== id));
+      setFilteredClientes(filteredClientes.filter((user) => user.id !== id));
     } catch (e) {
       console.error("Erro ao deletar usuário: ", e);
       alert("Erro ao deletar usuário: " + e.message);
@@ -51,8 +67,15 @@ export const CrudCliente = () => {
 
   return (
     <div className={style.container}>
+      <input
+        className={style.searchInput}
+        type="text"
+        placeholder="Pesquisar por nome..."
+        value={searchTerm}
+        onChange={handleSearch}
+      />
       <ul className={style.clientList}>
-        {Clientes.map((user) => (
+        {filteredClientes.map((user) => (
           <li
             key={user.id}
             className={`${style.clientItem} ${

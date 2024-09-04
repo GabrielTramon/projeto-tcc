@@ -1,29 +1,29 @@
+/* styles.module.css */
+
 .page {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  min-height: 100vh;
-  background-color: #f0f0f0;
+  height: 100vh;
+  padding-right: 50px; /* Mover os botões um pouco mais para a esquerda */
+  background-color: #f4f4f4;
 }
 
 .button {
-  background-color: #4CAF50; /* Cor verde */
+  width: 250px;
+  padding: 15px;
+  margin-bottom: 10px;
+  background-color: #66bb6a; /* Cor verde claro */
   color: white;
-  padding: 15px 20px;
-  margin: 10px 0;
   border: none;
   border-radius: 5px;
+  font-size: 1rem;
   cursor: pointer;
-  width: 250px; /* Largura dos botões */
-  font-size: 16px;
-  transition: background-color 0.3s;
+  text-align: center; /* Texto centralizado */
+  transition: background-color 0.3s ease;
 }
 
 .button:hover {
-  background-color: #45a049; /* Cor ao passar o mouse */
-}
-
-.button:active {
-  background-color: #3e8e41; /* Cor ao clicar no botão */
+  background-color: #4caf50; /* Cor verde mais escura ao passar o mouse */
 }

@@ -1,0 +1,93 @@
+/* styles.module.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }/* styles.module.css */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+  }
+  
+  .inputGroup {
+    margin-bottom: 15px;
+    width: 300px;
+  }
+  
+  .inputGroup input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  
+  .inputGroup input:focus {
+    border-color: #66bb6a;
+    outline: none;
+  }
+  
+  .button {
+    width: 320px;
+    padding: 12px;
+    background-color: #66bb6a; /* Verde claro */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #4caf50; /* Verde escuro ao passar o mouse */
+  }
+  
+  
+  input {
+    width: 300px;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  
+  input:focus {
+    border-color: #4caf50; /* Cor verde ao focar */
+    outline: none;
+  }
+  
+  button {
+    width: 320px;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #4caf50; /* Cor verde sólida */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #45a049; /* Verde mais escuro ao passar o mouse */
+  }
+  
