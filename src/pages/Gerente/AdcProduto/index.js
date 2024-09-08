@@ -15,7 +15,7 @@ const firebaseApp = initializeApp({
 
 const db = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
-const usersCollectionRef = collection(db, "Clientes");
+const usersCollectionRef = collection(db, "Produtos");
 
 export const AdcProduto = () => {
   const [nome, setNome] = useState("");
@@ -31,7 +31,7 @@ export const AdcProduto = () => {
   };
 
   const uploadImage = async (file) => {
-    const storageRef = ref(storage, `images/${file.name}`);
+    const storageRef = ref(storage, `Produtos/${file.name}`);
     await uploadBytes(storageRef, file);
     return await getDownloadURL(storageRef);
   };

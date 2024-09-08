@@ -1,0 +1,97 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .searchInput {
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .clientList {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    width: 100%;
+  }
+  
+  .clientItem {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between; /* Organiza os elementos em colunas */
+    align-items: center;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .clientItem:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .clientItem img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 20px;
+    border-radius: 8px;
+  }
+  
+  .clientLeft {
+    display: flex;
+    align-items: center;
+  }
+  
+  .clientLeft h2 {
+    font-size: 24px;
+    margin-left: 10px; /* Espaço entre a imagem e o nome */
+    color: #333;
+  }
+  
+  .clientDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end; /* Alinha os detalhes à direita */
+    width: 50%; /* Ocupar metade da largura */
+  }
+  
+  .clientDetails p {
+    margin: 5px 0;
+    color: #666;
+    font-size: 16px;
+  }
+  
+  .clientDetails p span {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .deleteButton {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+  }
+  
+  .deleteButton:hover {
+    background-color: #c0392b;
+  }
+  
