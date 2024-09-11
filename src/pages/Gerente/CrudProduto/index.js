@@ -5,7 +5,7 @@ import {
   doc,
   deleteDoc,
   getDocs,
-  updateDoc, // Importando função para atualizar documentos
+  updateDoc,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import style from "../CrudProduto/styles.module.css";
@@ -24,8 +24,8 @@ export const CrudProduto = () => {
   const [filteredProdutos, setFilteredProdutos] = useState([]);
   const [activeClientId, setActiveClientId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [editingProductId, setEditingProductId] = useState(null); // Estado para armazenar o ID do produto em edição
-  const [editFormData, setEditFormData] = useState({}); // Dados do formulário de edição
+  const [editingProductId, setEditingProductId] = useState(null);
+  const [editFormData, setEditFormData] = useState({});
 
   const db = getFirestore(firebaseApp);
   const ProdutosCollectionRef = collection(db, "Produtos");
@@ -67,8 +67,8 @@ export const CrudProduto = () => {
   }
 
   const startEditUser = (user) => {
-    setEditingProductId(user.id); // Define o ID do produto que está sendo editado
-    setEditFormData(user); // Preenche o formulário com os dados do produto atual
+    setEditingProductId(user.id);
+    setEditFormData(user);
   };
 
   const handleEditChange = (e) => {
@@ -84,13 +84,12 @@ export const CrudProduto = () => {
       const userDoc = doc(db, "Produtos", editingProductId);
       await updateDoc(userDoc, editFormData);
       alert("Produto atualizado com sucesso!");
-      // Atualiza a lista de produtos com os dados modificados
       const updatedProdutos = Produtos.map((prod) =>
         prod.id === editingProductId ? { ...editFormData, id: editingProductId } : prod
       );
       setProdutos(updatedProdutos);
       setFilteredProdutos(updatedProdutos);
-      setEditingProductId(null); // Sai do modo de edição
+      setEditingProductId(null);
     } catch (e) {
       console.error("Erro ao atualizar produto: ", e);
       alert("Erro ao atualizar produto: " + e.message);
@@ -110,36 +109,16 @@ export const CrudProduto = () => {
         {filteredProdutos.map((user) => (
           <li
             key={user.id}
-            className={`${style.clientItem} ${
-              activeClientId === user.id ? style.active : ""
-            }`}
+            className={`${style.clientItem} ${activeClientId === user.id ? style.active : ""}`}
             onClick={() => toggleClientDetails(user.id)}
           >
-            {user.foto && (
-              <div>
-                <img
-                  src={user.foto}
-                  alt="Imagem do Produto"
-                  style={{ width: "200px", height: "200px" }}
-                />
-              </div>
-            )}
             <div className={style.clientDetails}>
               <p>Nome: {user.nome}</p>
               <p>Codigo: {user.codigo}</p>
-              <p>Descrição: {user.descrição}</p>
               <p>Marca: {user.marca}</p>
               <p>Quantidade: {user.quantidade}</p>
               <p>Categoria: {user.categoria}</p>
-              <button
-                className={style.deleteButton}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  deleteUser(user.id);
-                }}
-              >
-                Deletar
-              </button>
+              <p>Descrição: {user.descrição}</p>
               <button
                 className={style.editButton}
                 onClick={(e) => {
@@ -149,8 +128,16 @@ export const CrudProduto = () => {
               >
                 Editar
               </button>
+              <button
+                className={style.deleteButton}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  deleteUser(user.id);
+                }}
+              >
+                Deletar
+              </button>
 
-              {/* Formulário de edição inline, só aparece para o produto em edição */}
               {editingProductId === user.id && (
                 <form className={style.editForm} onSubmit={saveEdits}>
                   <h3>Editando Produto: {user.nome}</h3>
@@ -211,13 +198,21 @@ export const CrudProduto = () => {
                   <button type="submit">Salvar Alterações</button>
                   <button
                     type="button"
-                    onClick={() => setEditingProductId(null)} // Cancelar edição
+                    onClick={() => setEditingProductId(null)}
                   >
                     Cancelar
                   </button>
                 </form>
               )}
             </div>
+            {user.foto && (
+              <div className={style.productImage}>
+                <img
+                  src={user.foto}
+                  alt="Imagem do Produto"
+                />
+              </div>
+            )}
           </li>
         ))}
       </ul>
