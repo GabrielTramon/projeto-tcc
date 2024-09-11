@@ -5,6 +5,7 @@ import {
   doc,
   deleteDoc,
   getDocs,
+  updateDoc, // Importando função para atualizar documentos
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import style from "../CrudCliente/styles.module.css";
@@ -23,6 +24,8 @@ export const CrudCliente = () => {
   const [filteredClientes, setFilteredClientes] = useState([]);
   const [activeClientId, setActiveClientId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [editingClient, setEditingClient] = useState(null); // Estado para o cliente em edição
+  const [editFormData, setEditFormData] = useState({}); // Dados do formulário de edição
 
   const db = getFirestore(firebaseApp);
   const ClientesCollectionRef = collection(db, "Clientes");
@@ -56,14 +59,45 @@ export const CrudCliente = () => {
     try {
       const userDoc = doc(db, "Clientes", id);
       await deleteDoc(userDoc);
-      alert("Usuário deletado com sucesso!");
-      setClientes(Clientes.filter((user) => user.id !== id));
-      setFilteredClientes(filteredClientes.filter((user) => user.id !== id));
+      alert("Cliente deletado com sucesso!");
+      setClientes(Clientes.filter((client) => client.id !== id));
+      setFilteredClientes(filteredClientes.filter((client) => client.id !== id));
     } catch (e) {
-      console.error("Erro ao deletar usuário: ", e);
-      alert("Erro ao deletar usuário: " + e.message);
+      console.error("Erro ao deletar cliente: ", e);
+      alert("Erro ao deletar cliente: " + e.message);
     }
   }
+
+  const startEditClient = (client) => {
+    setEditingClient(client);
+    setEditFormData(client); // Preenche o formulário com os dados do cliente atual
+  };
+
+  const handleEditChange = (e) => {
+    setEditFormData({
+      ...editFormData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const saveEdits = async (e) => {
+    e.preventDefault();
+    try {
+      const clientDoc = doc(db, "Clientes", editingClient.id);
+      await updateDoc(clientDoc, editFormData);
+      alert("Cliente atualizado com sucesso!");
+      // Atualiza a lista de clientes com os dados modificados
+      const updatedClientes = Clientes.map((client) =>
+        client.id === editingClient.id ? { ...editFormData, id: editingClient.id } : client
+      );
+      setClientes(updatedClientes);
+      setFilteredClientes(updatedClientes);
+      setEditingClient(null); // Sai do modo de edição
+    } catch (e) {
+      console.error("Erro ao atualizar cliente: ", e);
+      alert("Erro ao atualizar cliente: " + e.message);
+    }
+  };
 
   return (
     <div className={style.container}>
@@ -75,34 +109,112 @@ export const CrudCliente = () => {
         onChange={handleSearch}
       />
       <ul className={style.clientList}>
-        {filteredClientes.map((user) => (
+        {filteredClientes.map((client) => (
           <li
-            key={user.id}
+            key={client.id}
             className={`${style.clientItem} ${
-              activeClientId === user.id ? style.active : ""
+              activeClientId === client.id ? style.active : ""
             }`}
-            onClick={() => toggleClientDetails(user.id)}
+            onClick={() => toggleClientDetails(client.id)}
           >
-            {user.nome}
+            {client.nome}
             <div className={style.clientDetails}>
-              <p>Email: {user.email}</p>
-              <p>Endereço: {user.endereço}</p>
-              <p>CPF: {user.cpf}</p>
-              <p>Telefone: {user.telefone}</p>
-              <p>Data de Nascimento: {user.dataNascimento}</p>
+              <p>Email: {client.email}</p>
+              <p>Endereço: {client.endereço}</p>
+              <p>CPF: {client.cpf}</p>
+              <p>Telefone: {client.telefone}</p>
+              <p>Data de Nascimento: {client.dataNascimento}</p>
               <button
                 className={style.deleteButton}
                 onClick={(e) => {
                   e.stopPropagation();
-                  deleteUser(user.id);
+                  deleteUser(client.id);
                 }}
               >
                 Deletar
+              </button>
+              <button
+                className={style.editButton}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  startEditClient(client);
+                }}
+              >
+                Editar
               </button>
             </div>
           </li>
         ))}
       </ul>
+
+      {/* Formulário de edição */}
+      {editingClient && (
+        <form className={style.editForm} onSubmit={saveEdits}>
+          <h3>Editando Cliente: {editingClient.nome}</h3>
+          <label>
+            Nome:
+            <input
+              type="text"
+              name="nome"
+              value={editFormData.nome}
+              onChange={handleEditChange}
+            />
+          </label>
+          <label>
+            Email:
+            <input
+              type="email"
+              name="email"
+              value={editFormData.email}
+              onChange={handleEditChange}
+            />
+          </label>
+          <label>
+            Endereço:
+            <input
+              type="text"
+              name="endereço"
+              value={editFormData.endereço}
+              onChange={handleEditChange}
+            />
+          </label>
+          <label>
+            CPF:
+            <input
+              type="text"
+              name="cpf"
+              value={editFormData.cpf}
+              onChange={handleEditChange}
+            />
+          </label>
+          <label>
+            Telefone:
+            <input
+              type="text"
+              name="telefone"
+              value={editFormData.telefone}
+              onChange={handleEditChange}
+            />
+          </label>
+          <label>
+            Data de Nascimento:
+            <input
+              type="date"
+              name="dataNascimento"
+              value={editFormData.dataNascimento}
+              onChange={handleEditChange}
+            />
+          </label>
+          <button type="submit" className={style.editButton}>Salvar Alterações</button>
+          <button
+            type="button"
+            className={style.deleteButton}
+            onClick={() => setEditingClient(null)} // Cancelar edição
+          >
+            Cancelar
+          </button>
+        </form>
+      )}
     </div>
   );
 };

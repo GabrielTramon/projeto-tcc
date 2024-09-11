@@ -1,54 +1,120 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-  }
-  
-  .clientList {
-    list-style-type: none;
-    padding: 0;
-    width: 100%;
-    max-width: 600px;
-  }
-  
-  .clientItem {
-    background-color: #f9f9f9;
-    margin-bottom: 10px;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .clientItem:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .clientDetails {
-    display: none;
-    margin-top: 10px;
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .clientItem.active .clientDetails {
-    display: block;
-  }
-  
-  .deleteButton {
-    margin-top: 10px;
-    padding: 5px 10px;
-    background-color: #ff5252;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .deleteButton:hover {
-    background-color: #ff1744;
-  }
-  
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.searchInput {
+  width: 50%;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.clientList {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+  max-width: 600px;
+}
+
+.clientItem {
+  background-color: #f9f9f9;
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.clientItem:hover {
+  background-color: #e0e0e0;
+}
+
+.clientDetails {
+  display: none;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.clientItem.active .clientDetails {
+  display: block;
+}
+
+.deleteButton, .editButton {
+  background-color: #3498db; /* Cor de fundo do botão */
+  color: #fff; /* Cor do texto do botão */
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.deleteButton:hover, .editButton:hover {
+  background-color: #2980b9; /* Cor de fundo do botão ao passar o mouse */
+}
+
+.editForm {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: none; /* Remove a sombra */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.editForm h3 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.editForm label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.editForm input {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.editForm button {
+  background-color: #3498db; /* Cor de fundo do botão */
+  color: #fff; /* Cor do texto do botão */
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.editForm button:hover {
+  background-color: #2980b9; /* Cor de fundo do botão ao passar o mouse */
+}
+
+.editForm .cancelButton {
+  background-color: #e74c3c; /* Cor de fundo do botão cancelar */
+}
+
+.editForm .cancelButton:hover {
+  background-color: #c0392b; /* Cor de fundo do botão cancelar ao passar o mouse */
+}

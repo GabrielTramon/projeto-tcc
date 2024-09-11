@@ -7,7 +7,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import style from "../CrudCliente/styles.module.css";
+import style from "../CrudVendedor/styles.module.css";
 
 const firebaseApp = initializeApp({
   apiKey: "AIzaSyCEli15SSz40ZzsWWY3orYRcxx8I9qxIXw",

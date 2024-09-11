@@ -5,6 +5,7 @@ import {
   doc,
   deleteDoc,
   getDocs,
+  updateDoc, // Importando função para atualizar documentos
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import style from "../CrudProduto/styles.module.css";
@@ -23,6 +24,8 @@ export const CrudProduto = () => {
   const [filteredProdutos, setFilteredProdutos] = useState([]);
   const [activeClientId, setActiveClientId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [editingProductId, setEditingProductId] = useState(null); // Estado para armazenar o ID do produto em edição
+  const [editFormData, setEditFormData] = useState({}); // Dados do formulário de edição
 
   const db = getFirestore(firebaseApp);
   const ProdutosCollectionRef = collection(db, "Produtos");
@@ -30,10 +33,9 @@ export const CrudProduto = () => {
   useEffect(() => {
     const getProdutos = async () => {
       const data = await getDocs(ProdutosCollectionRef);
-      const sortedClients = data.docs
-        .map((doc) => ({ ...doc.data(), id: doc.id }));
+      const sortedClients = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       setProdutos(sortedClients);
-      setFilteredProdutos(sortedClients); // Inicialmente, a lista filtrada é a lista completa
+      setFilteredProdutos(sortedClients);
     };
     getProdutos();
   }, []);
@@ -64,6 +66,37 @@ export const CrudProduto = () => {
     }
   }
 
+  const startEditUser = (user) => {
+    setEditingProductId(user.id); // Define o ID do produto que está sendo editado
+    setEditFormData(user); // Preenche o formulário com os dados do produto atual
+  };
+
+  const handleEditChange = (e) => {
+    setEditFormData({
+      ...editFormData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const saveEdits = async (e) => {
+    e.preventDefault();
+    try {
+      const userDoc = doc(db, "Produtos", editingProductId);
+      await updateDoc(userDoc, editFormData);
+      alert("Produto atualizado com sucesso!");
+      // Atualiza a lista de produtos com os dados modificados
+      const updatedProdutos = Produtos.map((prod) =>
+        prod.id === editingProductId ? { ...editFormData, id: editingProductId } : prod
+      );
+      setProdutos(updatedProdutos);
+      setFilteredProdutos(updatedProdutos);
+      setEditingProductId(null); // Sai do modo de edição
+    } catch (e) {
+      console.error("Erro ao atualizar produto: ", e);
+      alert("Erro ao atualizar produto: " + e.message);
+    }
+  };
+
   return (
     <div className={style.container}>
       <input
@@ -82,17 +115,17 @@ export const CrudProduto = () => {
             }`}
             onClick={() => toggleClientDetails(user.id)}
           >
-                          {user.foto && (
-                <div>
-                  <img
-                    src={user.foto}
-                    alt="Imagem do Produto"
-                    style={{ width: "100px", height: "100px" }}
-                  />
-                </div>
-              )}
-            {user.nome}
+            {user.foto && (
+              <div>
+                <img
+                  src={user.foto}
+                  alt="Imagem do Produto"
+                  style={{ width: "200px", height: "200px" }}
+                />
+              </div>
+            )}
             <div className={style.clientDetails}>
+              <p>Nome: {user.nome}</p>
               <p>Codigo: {user.codigo}</p>
               <p>Descrição: {user.descrição}</p>
               <p>Marca: {user.marca}</p>
@@ -107,6 +140,83 @@ export const CrudProduto = () => {
               >
                 Deletar
               </button>
+              <button
+                className={style.editButton}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  startEditUser(user);
+                }}
+              >
+                Editar
+              </button>
+
+              {/* Formulário de edição inline, só aparece para o produto em edição */}
+              {editingProductId === user.id && (
+                <form className={style.editForm} onSubmit={saveEdits}>
+                  <h3>Editando Produto: {user.nome}</h3>
+                  <label>
+                    Nome:
+                    <input
+                      type="text"
+                      name="nome"
+                      value={editFormData.nome}
+                      onChange={handleEditChange}
+                    />
+                  </label>
+                  <label>
+                    Codigo:
+                    <input
+                      type="text"
+                      name="codigo"
+                      value={editFormData.codigo}
+                      onChange={handleEditChange}
+                    />
+                  </label>
+                  <label>
+                    Descrição:
+                    <input
+                      type="text"
+                      name="descrição"
+                      value={editFormData.descrição}
+                      onChange={handleEditChange}
+                    />
+                  </label>
+                  <label>
+                    Marca:
+                    <input
+                      type="text"
+                      name="marca"
+                      value={editFormData.marca}
+                      onChange={handleEditChange}
+                    />
+                  </label>
+                  <label>
+                    Quantidade:
+                    <input
+                      type="number"
+                      name="quantidade"
+                      value={editFormData.quantidade}
+                      onChange={handleEditChange}
+                    />
+                  </label>
+                  <label>
+                    Categoria:
+                    <input
+                      type="text"
+                      name="categoria"
+                      value={editFormData.categoria}
+                      onChange={handleEditChange}
+                    />
+                  </label>
+                  <button type="submit">Salvar Alterações</button>
+                  <button
+                    type="button"
+                    onClick={() => setEditingProductId(null)} // Cancelar edição
+                  >
+                    Cancelar
+                  </button>
+                </form>
+              )}
             </div>
           </li>
         ))}

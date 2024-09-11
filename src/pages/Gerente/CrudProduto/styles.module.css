@@ -1,97 +1,164 @@
+/* Container principal */
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .searchInput {
-    width: 50%;
-    padding: 10px;
-    margin-bottom: 20px;
-    font-size: 18px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-  }
-  
-  .clientList {
-    list-style-type: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-    width: 100%;
-  }
-  
-  .clientItem {
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    display: flex;
-    justify-content: space-between; /* Organiza os elementos em colunas */
-    align-items: center;
-    padding: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .clientItem:hover {
-    transform: scale(1.03);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .clientItem img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    margin-right: 20px;
-    border-radius: 8px;
-  }
-  
-  .clientLeft {
-    display: flex;
-    align-items: center;
-  }
-  
-  .clientLeft h2 {
-    font-size: 24px;
-    margin-left: 10px; /* Espaço entre a imagem e o nome */
-    color: #333;
-  }
-  
-  .clientDetails {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-end; /* Alinha os detalhes à direita */
-    width: 50%; /* Ocupar metade da largura */
-  }
-  
-  .clientDetails p {
-    margin: 5px 0;
-    color: #666;
-    font-size: 16px;
-  }
-  
-  .clientDetails p span {
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .deleteButton {
-    background-color: #e74c3c;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
-  }
-  
-  .deleteButton:hover {
-    background-color: #c0392b;
-  }
-  
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Input de pesquisa */
+.searchInput {
+  width: 50%;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Lista de produtos */
+.clientList {
+  list-style-type: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+/* Itens da lista de produtos */
+.clientItem {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.clientItem:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagem do produto */
+.clientItem img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin-right: 20px;
+  border-radius: 8px;
+}
+
+/* Detalhes do produto */
+.clientDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  width: 50%;
+}
+
+.clientDetails p {
+  margin: 5px 0;
+  color: #666;
+  font-size: 16px;
+}
+
+.clientDetails p span {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Botões de deletar e editar */
+.deleteButton, .editButton {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.deleteButton:hover {
+  background-color: #c0392b;
+}
+
+.editButton {
+  background-color: #4CAF50;
+}
+
+.editButton:hover {
+  background-color: #45a049;
+}
+
+/* Formulário de edição */
+.editForm {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin-top: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+.editForm h3 {
+  margin-bottom: 10px;
+}
+
+.editForm label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.editForm input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 5px;
+  outline: none;
+}
+
+/* Botões do formulário de edição */
+.editForm button {
+  padding: 10px 15px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Botão "Salvar Alterações" */
+.editForm button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.editForm button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+/* Botão "Cancelar" */
+.editForm button[type="button"] {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.editForm button[type="button"]:hover {
+  background-color: #c0392b;
+}
