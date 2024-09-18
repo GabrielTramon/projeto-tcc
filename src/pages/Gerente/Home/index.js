@@ -54,38 +54,38 @@ export function HomeGerente() {
         </div>
       </header>
       <div className={style.menu}>
-      <div className={style.buttonsContainer}>
-        <button className={style.button} onClick={PageVenda}>
-          Venda ao consumidor
-        </button>
-        <button className={style.button} onClick={PageAdcCliente}>
-          Adicionar cliente
-        </button>
-        <button className={style.button} onClick={PageCrudCLiente}>
-          Visualizar Clientes
-        </button>
-        <button className={style.button} onClick={AdcProduto}>
-          Adicionar Produto
-        </button>
-        <button className={style.button} onClick={CrudProduto}>
-          Visualizar Produtos
-        </button>
-        <button className={style.button} onClick={AdcVendedor}>
-          Adicionar Vendedor
-        </button>
-        <button className={style.button} onClick={CrudVendedor}>
-          Visualizar Vendedores
-        </button>
-        <button className={style.button} onClick={AdcAgenda}>
-          Adicionar Pet Banho e tosa
-        </button>
-        <button className={style.button} onClick={CrudAgenda}>
-          Visualizar agenda
-        </button>
-        <button className={style.button} onClick={PageFaturamento}>
-          Faturamento
-        </button>
-      </div>
+        <div className={style.buttonsContainer}>
+          <button className={style.button} onClick={PageVenda}>
+            Venda ao consumidor
+          </button>
+          <button className={style.button} onClick={PageAdcCliente}>
+            Adicionar cliente
+          </button>
+          <button className={style.button} onClick={PageCrudCLiente}>
+            Visualizar Clientes
+          </button>
+          <button className={style.button} onClick={AdcProduto}>
+            Adicionar Produto
+          </button>
+          <button className={style.button} onClick={CrudProduto}>
+            Visualizar Produtos
+          </button>
+          <button className={style.button} onClick={AdcVendedor}>
+            Adicionar Vendedor
+          </button>
+          <button className={style.button} onClick={CrudVendedor}>
+            Visualizar Vendedores
+          </button>
+          <button className={style.button} onClick={AdcAgenda}>
+            Adicionar Pet Banho e tosa
+          </button>
+          <button className={style.button} onClick={CrudAgenda}>
+            Visualizar agenda
+          </button>
+          <button className={style.button} onClick={PageFaturamento}>
+            Faturamento
+          </button>
+        </div>
       </div>
     </div>
   );
