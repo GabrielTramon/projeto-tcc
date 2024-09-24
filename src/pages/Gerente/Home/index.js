@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import style from "../Home/styles.module.css";
 import logo from "../../../assets/logo.png";
+import Menu from "../../../componentes/menu"; // Importa o Menu corretamente.
 
 export function HomeGerente() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export function HomeGerente() {
     navigate("/adcCliente");
   }
 
-  function PageCrudCLiente() {
+  function PageCrudCliente() { // Corrigido o nome da função
     navigate("/crudCliente");
   }
 
@@ -44,9 +45,10 @@ export function HomeGerente() {
   function PageFaturamento() {
     navigate("/faturamento");
   }
-  
+
   return (
     <div className={style.page}>
+      <Menu />
       <header className={style.header}>
         <img src={logo} alt="Logo" className={style.logo} />
         <div className={style.headerContent}>
@@ -61,7 +63,7 @@ export function HomeGerente() {
           <button className={style.button} onClick={PageAdcCliente}>
             Adicionar cliente
           </button>
-          <button className={style.button} onClick={PageCrudCLiente}>
+          <button className={style.button} onClick={PageCrudCliente}> {/* Corrigido o nome */}
             Visualizar Clientes
           </button>
           <button className={style.button} onClick={AdcProduto}>
