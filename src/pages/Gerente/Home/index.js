@@ -50,10 +50,6 @@ export function HomeGerente() {
     <div className={style.page}>
       <Menu />
       <header className={style.header}>
-        <img src={logo} alt="Logo" className={style.logo} />
-        <div className={style.headerContent}>
-          <span className={style.title}>Seja Bem-Vindo</span>
-        </div>
       </header>
       <div className={style.menu}>
         <div className={style.buttonsContainer}>

@@ -3,9 +3,29 @@ import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { createTheme } from '@mui/material/styles';
-import DescriptionIcon from '@mui/icons-material/Description';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
+import { useNavigate } from 'react-router';
+
+const NAVIGATION = [
+  {
+    segment: 'dashboard',
+    title: 'Dashboard',
+    icon: <DashboardIcon />,
+  },
+  {
+    segment: 'orders',
+    title: 'Orders',
+    icon: <ShoppingCartIcon />,
+  },
+  {
+    segment: 'sla',
+    title: 'coisado',
+    icon: <ShoppingCartIcon/>,
+  },
+];
 
 const demoTheme = createTheme({
   cssVariables: {
@@ -24,6 +44,18 @@ const demoTheme = createTheme({
 });
 
 function DemoPageContent({ pathname }) {
+  let content;
+
+  if (pathname === '/dashboard') {
+    content = <Typography>Welcome to the Dashboard!</Typography>;
+  } else if (pathname === '/orders') {
+    content = <Typography>Here are your Orders.</Typography>;
+  } else if (pathname === '/sla') {
+    content = <Typography>Here is the "coisado" section.</Typography>;
+  } else {
+    content = <Typography>Page not found.</Typography>;
+  }
+
   return (
     <Box
       sx={{
@@ -34,7 +66,7 @@ function DemoPageContent({ pathname }) {
         textAlign: 'center',
       }}
     >
-      <Typography>Dashboard content for {pathname}</Typography>
+      {content}
     </Box>
   );
 }
@@ -46,7 +78,7 @@ DemoPageContent.propTypes = {
 function Menu(props) {
   const { window } = props;
 
-  const [pathname, setPathname] = React.useState('/home');
+  const [pathname, setPathname] = React.useState('/dashboard');
 
   const router = React.useMemo(() => {
     return {
@@ -56,22 +88,17 @@ function Menu(props) {
     };
   }, [pathname]);
 
+  // Remove this const when copying and pasting into your project.
   const demoWindow = window !== undefined ? window() : undefined;
 
   return (
+    // preview-start
     <AppProvider
-      navigation={[
-        {
-          segment: 'home',
-          title: 'Home',
-          icon: <DescriptionIcon />,
-        },
-        {
-          segment: 'about',
-          title: 'About Us',
-          icon: <DescriptionIcon />,
-        },
-      ]}
+      navigation={NAVIGATION}
+      branding={{
+        logo: <img src="https://mui.com/static/logo.png" alt=" logo" />,
+        title: 'T&T',
+      }}
       router={router}
       theme={demoTheme}
       window={demoWindow}
@@ -80,10 +107,15 @@ function Menu(props) {
         <DemoPageContent pathname={pathname} />
       </DashboardLayout>
     </AppProvider>
+    // preview-end
   );
 }
 
 Menu.propTypes = {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * Remove this when copying and pasting into your project.
+   */
   window: PropTypes.func,
 };
 
