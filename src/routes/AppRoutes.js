@@ -11,6 +11,7 @@ import { CrudVendedor } from "../pages/Gerente/CrudVendedor";
 import { AdcAgenda } from "../pages/Gerente/AdcAgenda";
 import { CrudAgenda } from "../pages/Gerente/CrudAgenda";
 import { Faturamento } from "../pages/Gerente/Faturamento";
+import AppProviderTheme from "../componentes/menu";
 
 export function AppRoutes() {
   return (
@@ -28,6 +29,10 @@ export function AppRoutes() {
         <Route path="/adcAgenda" element={<AdcAgenda />} />
         <Route path="/crudAgenda" element={<CrudAgenda />} />
         <Route path="/faturamento" element={<Faturamento />} />
+        <Route path="/painel" element={<AppProviderTheme/>}>
+          <Route path="crudAgenda" element={<CrudAgenda />} />
+          <Route path="faturamento" element={<Faturamento />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

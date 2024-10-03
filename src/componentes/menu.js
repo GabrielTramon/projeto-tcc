@@ -7,6 +7,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 const NAVIGATION = [
   {
@@ -14,7 +15,7 @@ const NAVIGATION = [
     title: 'Main items',
   },
   {
-    segment: 'page',
+    segment: 'painel/faturamento',
     title: 'Page',
     icon: <DashboardIcon />,
   },
@@ -80,8 +81,10 @@ DemoPageContent.propTypes = {
 
 function AppProviderTheme(props) {
   const { window } = props;
+  const location = useLocation().pathname;
 
-  const [pathname, setPathname] = React.useState('/page');
+  const [pathname, setPathname] = React.useState('');
+  const navigate = useNavigate()
 
   const router = React.useMemo(() => {
     return {
@@ -90,6 +93,15 @@ function AppProviderTheme(props) {
       navigate: (path) => setPathname(String(path)),
     };
   }, [pathname]);
+
+  React.useEffect(() => {
+    if (!pathname) return;
+    navigate(pathname)
+  }, [pathname])
+
+  React.useEffect(() => {
+    setPathname(location)
+  }, [location])
 
   // Remove this const when copying and pasting into your project.
   const demoWindow = window !== undefined ? window() : undefined;
@@ -103,7 +115,7 @@ function AppProviderTheme(props) {
       window={demoWindow}
     >
       <DashboardLayout>
-        <DemoPageContent pathname={pathname} />
+        <Outlet/>
       </DashboardLayout>
     </AppProvider>
     // preview-end

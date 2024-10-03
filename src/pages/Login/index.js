@@ -24,7 +24,7 @@ export function Login() {
   }
 
   if (user) {
-    navigate("/homeGerente");
+    navigate("/painel");
   }
 
   return (
