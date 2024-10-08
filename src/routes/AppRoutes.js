@@ -19,17 +19,15 @@ export function AppRoutes() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/homeGerente" element={<HomeGerente />} />
-        <Route path="/venda" element={<Venda />} />
-        <Route path="/adcCliente" element={<AdcCliente />} />
-        <Route path="/crudCliente" element={<CrudCliente />} />
-        <Route path="/adcProduto" element={<AdcProduto />} />
-        <Route path="/crudProduto" element={<CrudProduto />} />
-        <Route path="/adcVendedor" element={<AdcVendedor />} />
-        <Route path="/crudVendedor" element={<CrudVendedor />} />
-        <Route path="/adcAgenda" element={<AdcAgenda />} />
-        <Route path="/crudAgenda" element={<CrudAgenda />} />
-        <Route path="/faturamento" element={<Faturamento />} />
         <Route path="/painel" element={<AppProviderTheme/>}>
+          <Route path="venda" element={<Venda />} />
+          <Route path="adcCliente" element={<AdcCliente />} />
+          <Route path="crudCliente" element={<CrudCliente />} />
+          <Route path="adcProduto" element={<AdcProduto />} />
+          <Route path="crudProduto" element={<CrudProduto />} />
+          <Route path="adcVendedor" element={<AdcVendedor />} />
+          <Route path="crudVendedor" element={<CrudVendedor />} />
+          <Route path="adcAgenda" element={<AdcAgenda />} />
           <Route path="crudAgenda" element={<CrudAgenda />} />
           <Route path="faturamento" element={<Faturamento />} />
         </Route>

@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { createTheme } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
@@ -12,17 +13,42 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 const NAVIGATION = [
   {
     kind: 'header',
-    title: 'Main items',
+    title: 'Menu items',
   },
   {
-    segment: 'painel/faturamento',
-    title: 'Page',
+    segment: 'painel/venda',
+    title: 'Venda',
+    icon: <TimelineIcon />,
+  },
+  {
+    segment: 'painel/adcCliente',
+    title: 'Adicionar Clientes',
     icon: <DashboardIcon />,
   },
   {
-    segment: 'page-2',
-    title: 'Page 2',
+    segment: 'painel/crudCliente',
+    title: 'Pesquisa Clientes',
+    icon: <DashboardIcon />,
+  },
+  {
+    segment: 'painel/adcProduto',
+    title: 'Adicionar Produtos',
+    icon: <DashboardIcon />,
+  },
+  {
+    segment: 'painel/crudProduto',
+    title: 'Pesquisa Produtos',
     icon: <TimelineIcon />,
+  },
+  {
+    segment: 'dashboard',
+    title: 'Dashboard',
+    icon: <DashboardIcon />,
+  },
+  {
+    segment: 'orders',
+    title: 'Orders',
+    icon: <ShoppingCartIcon />,
   },
 ];
 
@@ -80,11 +106,11 @@ DemoPageContent.propTypes = {
 };
 
 function AppProviderTheme(props) {
-  const { window } = props;
+  const { window, logoUrl } = props;
   const location = useLocation().pathname;
 
   const [pathname, setPathname] = React.useState('');
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const router = React.useMemo(() => {
     return {
@@ -96,12 +122,12 @@ function AppProviderTheme(props) {
 
   React.useEffect(() => {
     if (!pathname) return;
-    navigate(pathname)
-  }, [pathname])
+    navigate(pathname);
+  }, [pathname]);
 
   React.useEffect(() => {
-    setPathname(location)
-  }, [location])
+    setPathname(location);
+  }, [location]);
 
   // Remove this const when copying and pasting into your project.
   const demoWindow = window !== undefined ? window() : undefined;
@@ -113,9 +139,13 @@ function AppProviderTheme(props) {
       router={router}
       theme={customTheme}
       window={demoWindow}
+      branding={{
+        logo: <img src={logoUrl} alt="Logo" style={{ height: '40px' }} />,
+        title: 'T&T Sistens',
+      }}
     >
       <DashboardLayout>
-        <Outlet/>
+        <Outlet />
       </DashboardLayout>
     </AppProvider>
     // preview-end
@@ -128,6 +158,10 @@ AppProviderTheme.propTypes = {
    * Remove this when copying and pasting into your project.
    */
   window: PropTypes.func,
+  /**
+   * URL for the logo image.
+   */
+  logoUrl: PropTypes.string.isRequired,
 };
 
 export default AppProviderTheme;
