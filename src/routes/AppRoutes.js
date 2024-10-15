@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "../pages/Login";
-import { HomeGerente } from "../pages/Gerente/Home";
 import { Venda } from "../pages/Gerente/Venda";
 import { AdcCliente } from "../pages/Gerente/AdcCliente";
 import { CrudCliente } from "../pages/Gerente/CrudCliente";
@@ -18,7 +17,6 @@ export function AppRoutes() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/homeGerente" element={<HomeGerente />} />
         <Route path="/painel" element={<AppProviderTheme/>}>
           <Route path="venda" element={<Venda />} />
           <Route path="adcCliente" element={<AdcCliente />} />

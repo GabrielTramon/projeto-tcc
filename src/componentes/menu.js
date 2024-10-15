@@ -1,14 +1,20 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import SearchIcon from '@mui/icons-material/Search';
+import LocalMallIcon from '@mui/icons-material/LocalMall';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import DateRangeIcon from '@mui/icons-material/DateRange';
 import Typography from '@mui/material/Typography';
 import { createTheme } from '@mui/material/styles';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import TimelineIcon from '@mui/icons-material/Timeline';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import logo2 from "../assets/logo2.png";
+
 
 const NAVIGATION = [
   {
@@ -18,37 +24,52 @@ const NAVIGATION = [
   {
     segment: 'painel/venda',
     title: 'Venda',
-    icon: <TimelineIcon />,
+    icon: <PointOfSaleIcon />,
   },
   {
     segment: 'painel/adcCliente',
     title: 'Adicionar Clientes',
-    icon: <DashboardIcon />,
+    icon: <PersonAddIcon/>,
   },
   {
     segment: 'painel/crudCliente',
-    title: 'Pesquisa Clientes',
-    icon: <DashboardIcon />,
+    title: 'Pesquisar Clientes',
+    icon: <PersonSearchIcon/>,
   },
   {
     segment: 'painel/adcProduto',
     title: 'Adicionar Produtos',
-    icon: <DashboardIcon />,
+    icon: <LocalMallIcon/>,
   },
   {
     segment: 'painel/crudProduto',
-    title: 'Pesquisa Produtos',
-    icon: <TimelineIcon />,
+    title: 'Pesquisar Produtos',
+    icon: <SearchIcon/>,
   },
   {
-    segment: 'dashboard',
-    title: 'Dashboard',
-    icon: <DashboardIcon />,
+    segment: 'painel/adcVendedor',
+    title: 'Adicionar Vendedor',
+    icon: <PersonAddIcon/>,
   },
   {
-    segment: 'orders',
-    title: 'Orders',
-    icon: <ShoppingCartIcon />,
+    segment: 'painel/crudVendedor',
+    title: 'Pesquisar Vendedores',
+    icon: <PersonSearchIcon/>,
+  },
+  {
+    segment: 'painel/adcAgenda',
+    title: 'Adicionar Agenda',
+    icon: <DateRangeIcon/>,
+  },
+  {
+    segment: 'painel/crudAgenda',
+    title: 'Pesquisa Agenda',
+    icon: <SearchIcon/>,
+  },
+  {
+    segment: 'painel/faturamento',
+    title: 'Faturamento',
+    icon: <AttachMoneyIcon/>,
   },
 ];
 
@@ -68,8 +89,8 @@ const customTheme = createTheme({
     dark: {
       palette: {
         background: {
-          default: '#2A4364',
-          paper: '#112E4D',
+          default: '#121212',
+          paper: '#121212',
         },
       },
     },
@@ -106,7 +127,7 @@ DemoPageContent.propTypes = {
 };
 
 function AppProviderTheme(props) {
-  const { window, logoUrl } = props;
+  const { window } = props;
   const location = useLocation().pathname;
 
   const [pathname, setPathname] = React.useState('');
@@ -140,8 +161,8 @@ function AppProviderTheme(props) {
       theme={customTheme}
       window={demoWindow}
       branding={{
-        logo: <img src={logoUrl} alt="Logo" style={{ height: '40px' }} />,
-        title: 'T&T Sistens',
+        logo: <img src={logo2} alt="Logo" style={{ height: '100px', width: '200px'}} />,
+        title: '',
       }}
     >
       <DashboardLayout>
