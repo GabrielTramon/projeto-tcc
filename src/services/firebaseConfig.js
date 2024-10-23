@@ -1,5 +1,7 @@
+import React from 'react';
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, setPersistence, browserSessionPersistence } from "firebase/auth";
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCEli15SSz40ZzsWWY3orYRcxx8I9qxIXw",
@@ -11,4 +13,16 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+setPersistence(auth, browserSessionPersistence)
+  .then(() => {
+    console.log("Sessão persistente configurada.");
+  })
+  .catch((error) => {
+    console.error("Erro ao configurar a persistência:", error);
+  });
+
+export { db, auth };
+

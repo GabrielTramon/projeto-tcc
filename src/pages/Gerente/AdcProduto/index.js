@@ -21,6 +21,7 @@ export const AdcProduto = () => {
   const [nome, setNome] = useState("");
   const [marca, setMarca] = useState("");
   const [codigo, setCodigo] = useState("");
+  const [valor, setvalor] = useState("");
   const [categoria, setCategoria] = useState("");
   const [descrição, setDescrição] = useState("");
   const [quantidade, setQuantidade] = useState("");
@@ -45,6 +46,7 @@ export const AdcProduto = () => {
 
       const user = await addDoc(usersCollectionRef, {
         nome,
+        valor,
         marca,
         codigo,
         categoria,
@@ -87,6 +89,13 @@ export const AdcProduto = () => {
         placeholder="Código"
         value={codigo}
         onChange={(e) => setCodigo(e.target.value)}
+      />
+      <input
+        className={style.input}
+        type="text"
+        placeholder="valor"
+        value={valor}
+        onChange={(e) => setvalor(e.target.value)}
       />
       <input
         className={style.input}

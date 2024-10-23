@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "../pages/Login";
-import { Venda } from "../pages/Gerente/Venda";
+import Venda from "../pages/Gerente/Venda";
 import { AdcCliente } from "../pages/Gerente/AdcCliente";
 import { CrudCliente } from "../pages/Gerente/CrudCliente";
 import { AdcProduto } from "../pages/Gerente/AdcProduto";
