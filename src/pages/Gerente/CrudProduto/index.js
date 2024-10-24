@@ -115,7 +115,7 @@ export const CrudProduto = () => {
             <div className={style.clientDetails}>
               <p>Nome: {user.nome}</p>
               <p>Codigo: {user.codigo}</p>
-              <p>Valor: {user.Valor}</p>
+              <p>Valor: {user.valor}</p>
               <p>Marca: {user.marca}</p>
               <p>Quantidade: {user.quantidade}</p>
               <p>Categoria: {user.categoria}</p>
@@ -164,8 +164,8 @@ export const CrudProduto = () => {
                     Valor:
                     <input
                       type="text"
-                      name="Valor"
-                      value={editFormData.Valor}
+                      name="valor"
+                      value={editFormData.valor}
                       onChange={handleEditChange}
                     />
                   </label>

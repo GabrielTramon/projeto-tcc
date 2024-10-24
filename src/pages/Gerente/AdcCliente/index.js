@@ -12,6 +12,9 @@ const firebaseApp = initializeApp({
   appId: "1:550256230785:web:fa4e1d693f4a7f7b0fe880",
 });
 
+const db = getFirestore(firebaseApp);
+const usersCollectionRef = collection(db, "Usuarios");
+
 export const AdcCliente = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -19,9 +22,6 @@ export const AdcCliente = () => {
   const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
-
-  const db = getFirestore(firebaseApp);
-  const usersCollectionRef = collection(db, "Clientes");
 
   async function criarDado() {
     try {

@@ -3,15 +3,17 @@ import { db } from '../../../services/firebaseConfig'
 import { collection, getDocs, addDoc, doc, updateDoc } from 'firebase/firestore'
 import { Autocomplete, TextField } from '@mui/material'
 import BarcodeReader from 'react-barcode-reader'
+import style from "../Venda/styles.module.css";
+
 
 function Venda() {
   const [produtoID, setProdutoID] = useState('')
-  const [usuarioID, setUsuarioID] = useState('')
+  const [UsuariosID, setUsuariosID] = useState('')
   const [quantidade, setquantidade] = useState(1) // Começa com 1 para evitar zero
   const [vendedorID, setVendedorID] = useState('')
   const [Valor, setValor] = useState(0)
   const [produtos, setProdutos] = useState([])
-  const [usuarios, setUsuarios] = useState([])
+  const [Usuarios, setUsuarios] = useState([])
   const [vendedores, setVendedores] = useState([])
   const [produtoSelecionado, setProdutoSelecionado] = useState(null)
   const [quantidadeDisponivel, setquantidadeDisponivel] = useState(0)
@@ -29,13 +31,13 @@ function Venda() {
         setProdutos(produtosList)
 
         // Fetch Usuários
-        const usuariosRef = collection(db, 'Usuario')
-        const usuariosSnap = await getDocs(usuariosRef)
-        const usuariosList = usuariosSnap.docs.map(doc => ({
+        const UsuariosRef = collection(db, 'Usuarios')
+        const UsuariosSnap = await getDocs(UsuariosRef)
+        const UsuariosList = UsuariosSnap.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
         }))
-        setUsuarios(usuariosList)
+        setUsuarios(UsuariosList)
 
         // Fetch Vendedores
         const vendedoresRef = collection(db, 'Vendedores')
@@ -68,7 +70,7 @@ function Venda() {
   // Atualiza o Valor total quando a quantidade é alterada
   useEffect(() => {
     if (produtoSelecionado) {
-      setValor(produtoSelecionado.Valor * quantidade)
+      setValor(produtoSelecionado.valor * quantidade)
     }
   }, [quantidade, produtoSelecionado])
 
@@ -94,7 +96,7 @@ function Venda() {
       await addDoc(collection(db, 'Vendas'), {
         DataHora: new Date(),
         ProdutoID: produtoID,
-        UsuarioID: usuarioID,
+        UsuariosID: UsuariosID,
         quantidade: quantidade,
         VendedorID: vendedorID,
         Valor: Valor,
@@ -107,6 +109,10 @@ function Venda() {
       })
 
       alert('Venda registrada com sucesso!')
+      
+      // Recarrega a página
+      window.location.reload()
+
     } catch (error) {
       console.error('Erro ao registrar a venda:', error)
       alert('Erro ao registrar a venda')
@@ -114,8 +120,8 @@ function Venda() {
   }
 
   return (
-    <div>
-      <h1>Venda ao Consumidor</h1>
+    <div className={style.container}>
+      <div className={style.title}>Venda ao Consumidor</div>
       <form>
         <label htmlFor="produto">
           <Autocomplete
@@ -135,10 +141,10 @@ function Venda() {
         <label htmlFor="user">
           <Autocomplete
             id="user"
-            options={usuarios}
-            getOptionLabel={option => option.login || option.email} // Exibe login do usuário ou email se não houver login
+            options={Usuarios}
+            getOptionLabel={option => option.login || option.nome} // Exibe login do usuário ou email se não houver login
             onChange={(event, newValue) =>
-              setUsuarioID(newValue ? newValue.id : '')
+              setUsuariosID(newValue ? newValue.id : '')
             }
             renderInput={params => (
               <TextField {...params} label="Escolha um usuário" />

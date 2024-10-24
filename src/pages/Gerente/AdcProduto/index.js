@@ -93,7 +93,7 @@ export const AdcProduto = () => {
       <input
         className={style.input}
         type="text"
-        placeholder="valor"
+        placeholder="Valor"
         value={valor}
         onChange={(e) => setvalor(e.target.value)}
       />
