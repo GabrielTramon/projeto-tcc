@@ -7,7 +7,7 @@ import { AdcProduto } from "../pages/Gerente/AdcProduto";
 import { CrudProduto } from "../pages/Gerente/CrudProduto";
 import { AdcVendedor } from "../pages/Gerente/AdcVendedor";
 import { CrudVendedor } from "../pages/Gerente/CrudVendedor";
-import { AdcAgenda } from "../pages/Gerente/AdcAgenda";
+import AdcAgenda from "../pages/Gerente/AdcAgenda";
 import { CrudAgenda } from "../pages/Gerente/CrudAgenda";
 import { Faturamento } from "../pages/Gerente/Faturamento";
 import AppProviderTheme from "../componentes/menu";
@@ -17,7 +17,7 @@ export function AppRoutes() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/painel" element={<AppProviderTheme/>}>
+        <Route path="/painel" element={<AppProviderTheme />}>
           <Route path="venda" element={<Venda />} />
           <Route path="adcCliente" element={<AdcCliente />} />
           <Route path="crudCliente" element={<CrudCliente />} />
