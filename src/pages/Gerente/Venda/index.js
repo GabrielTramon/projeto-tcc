@@ -1,123 +1,152 @@
-import React, { useState, useEffect } from 'react'
-import { db } from '../../../services/firebaseConfig'
-import { collection, getDocs, addDoc, doc, updateDoc } from 'firebase/firestore'
-import { Autocomplete, TextField } from '@mui/material'
-import BarcodeReader from 'react-barcode-reader'
+import React, { useState, useEffect } from "react";
+import { db } from "../../../services/firebaseConfig";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
+import { Autocomplete, TextField } from "@mui/material";
+import BarcodeReader from "react-barcode-reader";
 import style from "../Venda/styles.module.css";
 
-
 function Venda() {
-  const [produtoID, setProdutoID] = useState('')
-  const [UsuariosID, setUsuariosID] = useState('')
-  const [quantidade, setquantidade] = useState(1) // Começa com 1 para evitar zero
-  const [vendedorID, setVendedorID] = useState('')
-  const [Valor, setValor] = useState(0)
-  const [produtos, setProdutos] = useState([])
-  const [Usuarios, setUsuarios] = useState([])
-  const [vendedores, setVendedores] = useState([])
-  const [produtoSelecionado, setProdutoSelecionado] = useState(null)
-  const [quantidadeDisponivel, setquantidadeDisponivel] = useState(0)
+  const [produtoID, setProdutoID] = useState("");
+  const [UsuariosID, setUsuariosID] = useState("");
+  const [quantidade, setQuantidade] = useState(1);
+  const [vendedorID, setVendedorID] = useState("");
+  const [valor, setvalor] = useState(0);
+  const [produtos, setProdutos] = useState([]);
+  const [Usuarios, setUsuarios] = useState([]);
+  const [vendedores, setVendedores] = useState([]);
+  const [produtoSelecionado, setProdutoSelecionado] = useState(null);
+  const [quantidadeDisponivel, setQuantidadeDisponivel] = useState(0);
+  const [itensVenda, setItensVenda] = useState([]); // Lista de itens
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch Produtos
-        const produtosRef = collection(db, 'Produtos')
-        const produtosSnap = await getDocs(produtosRef)
-        const produtosList = produtosSnap.docs.map(doc => ({
+        const produtosRef = collection(db, "Produtos");
+        const produtosSnap = await getDocs(produtosRef);
+        const produtosList = produtosSnap.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
-        }))
-        setProdutos(produtosList)
+        }));
+        setProdutos(produtosList);
 
-        // Fetch Usuários
-        const UsuariosRef = collection(db, 'Usuarios')
-        const UsuariosSnap = await getDocs(UsuariosRef)
-        const UsuariosList = UsuariosSnap.docs.map(doc => ({
+        const UsuariosRef = collection(db, "Usuarios");
+        const UsuariosSnap = await getDocs(UsuariosRef);
+        const UsuariosList = UsuariosSnap.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
-        }))
-        setUsuarios(UsuariosList)
+        }));
+        setUsuarios(UsuariosList);
 
-        // Fetch Vendedores
-        const vendedoresRef = collection(db, 'Vendedores')
-        const vendedoresSnap = await getDocs(vendedoresRef)
-        const vendedoresList = vendedoresSnap.docs.map(doc => ({
+        const vendedoresRef = collection(db, "Vendedores");
+        const vendedoresSnap = await getDocs(vendedoresRef);
+        const vendedoresList = vendedoresSnap.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
-        }))
-        setVendedores(vendedoresList)
+        }));
+        setVendedores(vendedoresList);
       } catch (error) {
-        console.error('Erro ao buscar dados:', error)
+        console.error("Erro ao buscar dados:", error);
       }
-    }
+    };
 
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
-  // Atualiza o Valor total e a quantidade disponível quando um produto é selecionado
   useEffect(() => {
     if (produtoID) {
-      const selectedProduct = produtos.find(produto => produto.id === produtoID)
+      const selectedProduct = produtos.find(
+        (produto) => produto.id === produtoID
+      );
       if (selectedProduct) {
-        setProdutoSelecionado(selectedProduct)
-        setquantidadeDisponivel(selectedProduct.quantidade || 0)
-        setValor(selectedProduct.Valor * quantidade)
+        setProdutoSelecionado(selectedProduct);
+        setQuantidadeDisponivel(selectedProduct.quantidade || 0);
+        setvalor(selectedProduct.valor * quantidade);
       }
     }
-  }, [produtoID, quantidade, produtos])
+  }, [produtoID, quantidade, produtos]);
 
-  // Atualiza o Valor total quando a quantidade é alterada
   useEffect(() => {
     if (produtoSelecionado) {
-      setValor(produtoSelecionado.valor * quantidade)
+      setvalor(produtoSelecionado.valor * quantidade);
     }
-  }, [quantidade, produtoSelecionado])
+  }, [quantidade, produtoSelecionado]);
 
-  const handlequantidadeChange = e => {
-    const value = Number(e.target.value)
+  const handleQuantidadeChange = (e) => {
+    const value = Number(e.target.value);
     if (value >= 1 && value <= quantidadeDisponivel) {
-      setquantidade(value)
+      setQuantidade(value);
     } else if (value > quantidadeDisponivel) {
-      alert('quantidade excede a disponibilidade do produto.')
+      alert("Quantidade excede a disponibilidade do produto.");
     }
-  }
+  };
+
+  const adicionarProduto = () => {
+    if (
+      produtoSelecionado &&
+      quantidade > 0 &&
+      quantidade <= quantidadeDisponivel
+    ) {
+      const itemVenda = {
+        produtoID: produtoSelecionado.id,
+        nome: produtoSelecionado.nome,
+        quantidade: quantidade,
+        valor: produtoSelecionado.valor * quantidade,
+      };
+      setItensVenda([...itensVenda, itemVenda]);
+      setProdutoID("");
+      setProdutoSelecionado(null);
+      setQuantidade(1);
+      setvalor(0);
+    } else {
+      alert("Selecione um produto válido e ajuste a quantidade.");
+    }
+  };
+
+  const removerItem = (index) => {
+    const novaLista = itensVenda.filter((_, i) => i !== index);
+    setItensVenda(novaLista);
+  };
 
   const handleVenda = async () => {
-    if (quantidade <= 0 || quantidade > quantidadeDisponivel) {
-      alert(
-        'A quantidade deve ser maior que zero e não pode exceder a disponibilidade do produto.'
-      )
-      return
+    if (itensVenda.length === 0) {
+      alert("Adicione pelo menos um produto à venda.");
+      return;
     }
 
     try {
-      // Adiciona a venda na coleção "Vendas"
-      await addDoc(collection(db, 'Vendas'), {
+      await addDoc(collection(db, "Vendas"), {
         DataHora: new Date(),
-        ProdutoID: produtoID,
+        Produtos: itensVenda,
         UsuariosID: UsuariosID,
-        quantidade: quantidade,
         VendedorID: vendedorID,
-        Valor: Valor,
-      })
+        valorTotal: itensVenda.reduce((total, item) => total + item.valor, 0),
+      });
 
-      // Atualiza o estoque do produto
-      const produtoRef = doc(db, 'Produtos', produtoID)
-      await updateDoc(produtoRef, {
-        quantidade: quantidadeDisponivel - quantidade,
-      })
+      await Promise.all(
+        itensVenda.map(async (item) => {
+          const produtoRef = doc(db, "Produtos", item.produtoID);
+          const produtoAtualizado = produtos.find(
+            (p) => p.id === item.produtoID
+          );
+          await updateDoc(produtoRef, {
+            quantidade: produtoAtualizado.quantidade - item.quantidade,
+          });
+        })
+      );
 
-      alert('Venda registrada com sucesso!')
-      
-      // Recarrega a página
-      window.location.reload()
-
+      alert("Venda registrada com sucesso!");
+      window.location.reload();
     } catch (error) {
-      console.error('Erro ao registrar a venda:', error)
-      alert('Erro ao registrar a venda')
+      console.error("Erro ao registrar a venda:", error);
+      alert("Erro ao registrar a venda");
     }
-  }
+  };
 
   return (
     <div className={style.container}>
@@ -127,12 +156,12 @@ function Venda() {
           <Autocomplete
             id="produto"
             options={produtos}
-            getOptionLabel={option => option.nome || option.id} // Exibe o nome do produto ou ID se não houver nome
+            getOptionLabel={(option) => option.nome || option.id}
             onChange={(event, newValue) => {
-              setProdutoID(newValue ? newValue.id : '')
-              setquantidade(1) // Reseta a quantidade quando o produto é alterado
+              setProdutoID(newValue ? newValue.id : "");
+              setQuantidade(1);
             }}
-            renderInput={params => (
+            renderInput={(params) => (
               <TextField {...params} label="Escolha um produto" />
             )}
           />
@@ -142,11 +171,11 @@ function Venda() {
           <Autocomplete
             id="user"
             options={Usuarios}
-            getOptionLabel={option => option.login || option.nome} // Exibe login do usuário ou email se não houver login
+            getOptionLabel={(option) => option.login || option.nome}
             onChange={(event, newValue) =>
-              setUsuariosID(newValue ? newValue.id : '')
+              setUsuariosID(newValue ? newValue.id : "")
             }
-            renderInput={params => (
+            renderInput={(params) => (
               <TextField {...params} label="Escolha um usuário" />
             )}
           />
@@ -156,11 +185,11 @@ function Venda() {
           <Autocomplete
             id="vendedores"
             options={vendedores}
-            getOptionLabel={option => option.nome || option.email} // Exibe nome do vendedor ou email se não houver nome
+            getOptionLabel={(option) => option.nome || option.email}
             onChange={(event, newValue) =>
-              setVendedorID(newValue ? newValue.id : '')
+              setVendedorID(newValue ? newValue.id : "")
             }
-            renderInput={params => (
+            renderInput={(params) => (
               <TextField {...params} label="Escolha um vendedor" />
             )}
           />
@@ -168,33 +197,56 @@ function Venda() {
         <br />
         <BarcodeReader
           onError={console.error}
-          onScan={data => setProdutoID(data)} // Use o código do produto lido
+          onScan={(data) => setProdutoID(data)}
         />
         <br />
         <label>
           <p>
             {produtoSelecionado
               ? `Este produto possui ${quantidadeDisponivel} unidades restantes.`
-              : ''}
+              : ""}
           </p>
-          quantidade:
+          Quantidade:
           <input
             type="number"
             value={quantidade}
-            onChange={handlequantidadeChange}
+            onChange={handleQuantidadeChange}
             required
             min="1"
           />
         </label>
         <br />
-        <span>Valor Total: R${Valor.toFixed(2)}</span>
+        <span>Valor do item: R${valor.toFixed(2)}</span>
+        <br />
+        <button type="button" onClick={adicionarProduto}>
+          Adicionar Produto à Venda
+        </button>
+        <br />
+        <div>
+          <h4>Itens adicionados:</h4>
+          <ul>
+            {itensVenda.map((item, index) => (
+              <li key={index}>
+                {item.nome} - Quantidade: {item.quantidade} - Valor: R$
+                {item.valor.toFixed(2)}
+                <button onClick={() => removerItem(index)}>Remover</button>
+              </li>
+            ))}
+          </ul>
+          <p>
+            <strong>Valor Total:</strong> R$
+            {itensVenda
+              .reduce((total, item) => total + item.valor, 0)
+              .toFixed(2)}
+          </p>
+        </div>
         <br />
         <button type="button" onClick={handleVenda}>
           Registrar Venda
         </button>
       </form>
     </div>
-  )
+  );
 }
 
-export default Venda
+export default Venda;
